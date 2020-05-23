@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import Web3 from 'web3';
-import EthSwap from '../abis/EthSwap.json';
-import Token from '../abis/Token.json';
-import Navbar from './Navbar';
-
-import './App.css';
+import React, { Component } from 'react'
+import Web3 from 'web3'
+import Token from '../abis/Token.json'
+import EthSwap from '../abis/EthSwap.json'
+import Navbar from './Navbar'
+import Main from './Main'
+import './App.css'
 
 class App extends Component {
 
@@ -16,14 +16,13 @@ class App extends Component {
   }
 
   async loadBlockchainData() {
-    const web3 = window.web3;
-    const accounts = await web3.eth.getAccounts();
-    this.setState({ account: accounts[0] });
-    console.log(this.state.account);
+    const web3 = window.web3
 
-    const ethBalance = await web3.eth.getBalance(this.state.account);
-    this.setState({ ethBalance });
-    console.log(this.state.ethbalance)
+    const accounts = await web3.eth.getAccounts()
+    this.setState({ account: accounts[0] })
+
+    const ethBalance = await web3.eth.getBalance(this.state.account)
+    this.setState({ ethBalance })
 
     // Load Token
     const networkId = await web3.eth.net.getId()
@@ -32,8 +31,9 @@ class App extends Component {
       const token = new web3.eth.Contract(Token.abi, tokenData.address)
       this.setState({ token })
       let tokenBalance = await token.methods.balanceOf(this.state.account).call()
+
       console.log("tokenBalance", tokenBalance.toString())
-      this.setState({ tokenBalance : tokenBalance.toString() })
+      //   this.setState({ tokenBalance: tokenBalance.toString() })
     } else {
       window.alert('Token contract not deployed to detected network.')
     }
@@ -68,14 +68,15 @@ class App extends Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       account: '',
       token: {},
-      tokenBalance: '0',
       ethSwap: {},
-      ethBalance: 0
-    };
+      ethBalance: '0',
+      tokenBalance: '0',
+      loading: true
+    }
   }
 
   render() {
@@ -86,7 +87,7 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
-                <h1>Hello World!</h1>
+                < Main />
               </div>
             </main>
           </div>
