@@ -16,20 +16,25 @@ class App extends Component {
   }
 
   async loadBlockchainData() {
+    console.log("EXECUTING: loadBlockchainData()")
     const web3 = window.web3
 
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
+    console.log("this.state.account", this.state.account)
 
     const ethBalance = await web3.eth.getBalance(this.state.account)
     this.setState({ ethBalance })
+    console.log("ethBalance", ethBalance)
 
     // Load Token
     const networkId = await web3.eth.net.getId()
+    console.log("networkId", networkId)
     const tokenData = Token.networks[networkId]
     if (tokenData) {
       const token = new web3.eth.Contract(Token.abi, tokenData.address)
       this.setState({ token })
+      console.log("token", token)
       let tokenBalance = await token.methods.balanceOf(this.state.account).call()
 
       console.log("tokenBalance", tokenBalance.toString())
@@ -45,6 +50,8 @@ class App extends Component {
     } else {
       window.alert('EthSwap contract not deployed to detected network.')
     }
+    console.log("this.state.ethSwap",this.state.ethSwap)
+    this.setState({ loading: false })
   }
 
   async loadWeb3() {
@@ -80,14 +87,32 @@ class App extends Component {
   }
 
   render() {
+    let content
+    if(this.state.loading) {
+      content = <p id="loader" className="text-center">Loading...</p>
+    } else {
+      content = <Main
+        ethBalance={this.state.ethBalance}
+        tokenBalance={this.state.tokenBalance}
+        buyTokens={this.buyTokens}
+        sellTokens={this.sellTokens}
+      />
+    }
+
     return (
       <div>
         <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
           <div className="row">
-            <main role="main" className="col-lg-12 d-flex text-center">
+            <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '600px' }}>
               <div className="content mr-auto ml-auto">
-                < Main />
+                <a
+                  href="http://www.dappuniversity.com/bootcamp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                </a>
+                {content}
               </div>
             </main>
           </div>

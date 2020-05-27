@@ -4341,12 +4341,13 @@
         }
       },
       "links": {},
-      "address": "0x5De21D6b484f25030cB555eAdd2660Ec91936822",
-      "transactionHash": "0xe8082f9f7ee187cfecfca8b197a7d67eeb3c79da39c704844db32188e2276724"
+      "address": "0xA78b853bc2f05D6Cb57f6781d7093108bCB03d9B",
+      "transactionHash": "0xfeee8657afafcd6de7326f5a2bcb3d44645ca3c9a291efb78629435ce697bedc"
     }
   },
   "schemaVersion": "3.1.0",
-  "updatedAt": "2020-05-22T05:41:44.383Z",
+  "updatedAt": "2020-05-26T08:28:54.804Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
